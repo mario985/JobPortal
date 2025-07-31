@@ -13,7 +13,7 @@ public class AccountController : Controller
         _signInManager = signInManager;
     }
     [HttpGet]
-    public IActionResult RegisterAscompany()
+    public IActionResult RegisterAsCompany()
     {
         return View();
     }
@@ -62,6 +62,7 @@ public class AccountController : Controller
                 Email = model.Email,
                 Address = model.Address,
                 UserName = model.Name,
+                IsCompany = false
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
@@ -97,13 +98,13 @@ public class AccountController : Controller
         );
         if (result.Succeeded)
         {
-            return RedirectToAction("Home", "Index");
+            return RedirectToAction("Index", "Home");
         }
         else if (result.IsLockedOut)
         {
             ModelState.AddModelError("", "Your account is locked ");
         }
-        ModelState.AddModelError("", "username or password is not correct");
+        ModelState.AddModelError("", "email or password is not correct");
         return View(model);
 
 

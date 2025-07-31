@@ -1,8 +1,205 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content fade-in-up">
+            <h1 class="hero-title">Find Your Dream Job or Top Talent Today</h1>
+            <p class="hero-subtitle">AI-powered job matching platform connecting talented professionals with innovative companies</p>
+            
+            <div class="hero-buttons">
+                <a asp-controller="Account" asp-action="RegisterAsUser" class="btn btn-hero btn-primary-hero">
+                    <i class="fas fa-search me-2"></i>Apply for Jobs
+                </a>
+                <a asp-controller="Account" asp-action="RegisterAsCompany" class="btn btn-hero btn-success-hero">
+                    <i class="fas fa-plus me-2"></i>Post a Job
+                </a>
+            </div>
+            
+            <div class="search-section">
+                <form class="search-form">
+                    <input type="text" class="search-input" placeholder="Job Title or Keyword" required>
+                    <input type="text" class="search-input" placeholder="Location" required>
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search me-2"></i>Search Jobs
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Jobs Section -->
+<section id="jobs" class="featured-jobs">
+    <div class="container">
+        <h2 class="section-title">Featured Jobs</h2>
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="job-card fade-in-up">
+                    <h3 class="job-title">Senior Software Engineer</h3>
+                    <p class="job-company"><i class="fas fa-building me-2"></i>TechCorp Solutions</p>
+                    <p class="job-location"><i class="fas fa-map-marker-alt me-2"></i>San Francisco, CA</p>
+                    <p class="job-salary"><i class="fas fa-dollar-sign me-2"></i>$120,000 - $150,000</p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="job-card fade-in-up">
+                    <h3 class="job-title">UX/UI Designer</h3>
+                    <p class="job-company"><i class="fas fa-building me-2"></i>Design Studio Pro</p>
+                    <p class="job-location"><i class="fas fa-map-marker-alt me-2"></i>New York, NY</p>
+                    <p class="job-salary"><i class="fas fa-dollar-sign me-2"></i>$90,000 - $110,000</p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="job-card fade-in-up">
+                    <h3 class="job-title">Data Scientist</h3>
+                    <p class="job-company"><i class="fas fa-building me-2"></i>AI Innovations Inc</p>
+                    <p class="job-location"><i class="fas fa-map-marker-alt me-2"></i>Seattle, WA</p>
+                    <p class="job-salary"><i class="fas fa-dollar-sign me-2"></i>$130,000 - $160,000</p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="job-card fade-in-up">
+                    <h3 class="job-title">Product Manager</h3>
+                    <p class="job-company"><i class="fas fa-building me-2"></i>StartupHub</p>
+                    <p class="job-location"><i class="fas fa-map-marker-alt me-2"></i>Austin, TX</p>
+                    <p class="job-salary"><i class="fas fa-dollar-sign me-2"></i>$100,000 - $130,000</p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="job-card fade-in-up">
+                    <h3 class="job-title">DevOps Engineer</h3>
+                    <p class="job-company"><i class="fas fa-building me-2"></i>CloudTech Solutions</p>
+                    <p class="job-location"><i class="fas fa-map-marker-alt me-2"></i>Remote</p>
+                    <p class="job-salary"><i class="fas fa-dollar-sign me-2"></i>$110,000 - $140,000</p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="job-card fade-in-up">
+                    <h3 class="job-title">Marketing Specialist</h3>
+                    <p class="job-company"><i class="fas fa-building me-2"></i>Growth Marketing Co</p>
+                    <p class="job-location"><i class="fas fa-map-marker-alt me-2"></i>Chicago, IL</p>
+                    <p class="job-salary"><i class="fas fa-dollar-sign me-2"></i>$70,000 - $90,000</p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="why-choose-us">
+    <div class="container">
+        <h2 class="section-title">Why Choose JobPortal?</h2>
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="benefit-card fade-in-up">
+                    <div class="benefit-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="benefit-title">AI-Powered Matching</h3>
+                    <p class="benefit-description">Our advanced AI algorithms match you with the perfect job opportunities based on your skills, experience, and preferences.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="benefit-card fade-in-up">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="benefit-title">Secure & Private</h3>
+                    <p class="benefit-description">Your data is protected with enterprise-grade security. We prioritize your privacy and ensure your information stays safe.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="benefit-card fade-in-up">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="benefit-title">Career Growth</h3>
+                    <p class="benefit-description">Access career resources, skill assessments, and personalized recommendations to accelerate your professional development.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials">
+    <div class="container">
+        <h2 class="section-title">What Our Users Say</h2>
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card fade-in-up">
+                    <div class="testimonial-avatar">JS</div>
+                    <p class="testimonial-quote">"JobPortal's AI matching helped me find my dream job in just 2 weeks. The platform is incredibly intuitive and the job recommendations were spot-on!"</p>
+                    <h4 class="testimonial-name">John Smith</h4>
+                    <p class="testimonial-position">Senior Developer at TechCorp</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card fade-in-up">
+                    <div class="testimonial-avatar">MJ</div>
+                    <p class="testimonial-quote">"As a hiring manager, JobPortal has revolutionized our recruitment process. We found exceptional candidates quickly and efficiently."</p>
+                    <h4 class="testimonial-name">Maria Johnson</h4>
+                    <p class="testimonial-position">HR Director at StartupHub</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card fade-in-up">
+                    <div class="testimonial-avatar">DW</div>
+                    <p class="testimonial-quote">"The AI-powered recommendations are incredible. I discovered opportunities I never would have found through traditional job boards."</p>
+                    <h4 class="testimonial-name">David Wilson</h4>
+                    <p class="testimonial-position">UX Designer at Design Studio</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- For Companies Section -->
+<section id="companies" class="for-companies">
+    <div class="container">
+        <h2 class="companies-title">Hire Smarter, Grow Faster</h2>
+        <p class="companies-subtitle">Join thousands of companies finding top talent through our AI-powered platform</p>
+        <a asp-controller="Account" asp-action="RegisterAsCompany" class="btn btn-hero btn-primary-hero">
+            <i class="fas fa-plus me-2"></i>Register as Company
+        </a>
+    </div>
+</section>
+
+<!-- AI Coding Agent Section -->
+<section class="ai-agent-section">
+    <div class="container">
+        <h2 class="ai-agent-title">Built with Precision by Our AI Coding Assistant</h2>
+        <p class="ai-agent-subtitle">Experience the future of web development with cutting-edge AI technology</p>
+        
+        <div class="ai-benefits">
+            <div class="ai-benefit">
+                <i class="fas fa-rocket fa-2x mb-3"></i>
+                <h4>Effortless Development</h4>
+                <p>Streamlined coding process with intelligent code generation and optimization</p>
+            </div>
+            <div class="ai-benefit">
+                <i class="fas fa-cogs fa-2x mb-3"></i>
+                <h4>Smart Code Optimization</h4>
+                <p>Advanced algorithms ensure clean, efficient, and maintainable code</p>
+            </div>
+            <div class="ai-benefit">
+                <i class="fas fa-bolt fa-2x mb-3"></i>
+                <h4>Rapid Deployment</h4>
+                <p>Quick iteration cycles and automated deployment for faster time-to-market</p>
+            </div>
+        </div>
+        
+        <a href="#learn-more" class="btn btn-hero btn-primary-hero">
+            <i class="fas fa-info-circle me-2"></i>Learn More
+        </a>
+    </div>
+</section>

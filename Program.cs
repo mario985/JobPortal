@@ -16,7 +16,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 }).AddEntityFrameworkStores<AppDbContext>()
   .AddDefaultTokenProviders();
-
+builder.Services.AddScoped<IJobRepository, JobRepository>();
 var app = builder.Build();
 app.Lifetime.ApplicationStarted.Register(async () =>
 {
