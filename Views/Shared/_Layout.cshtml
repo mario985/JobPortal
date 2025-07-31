@@ -50,7 +50,7 @@
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="fas fa-user me-1"></i>@User.Identity.Name
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -64,12 +64,12 @@
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="fas fa-user me-1"></i>Account
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="RegisterAsUser">Register as Job Seeker</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="RegisterAsCompany">Register as Company</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="LogIn">Log In</a></li>
-                            </ul>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="RegisterAsUser">Register as Job Seeker</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="RegisterAsCompany">Register as Company</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="LogIn">Log In</a></li>
+                        </ul>
                         </li>
                     }
                 </ul>

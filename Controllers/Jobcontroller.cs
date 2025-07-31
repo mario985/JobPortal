@@ -9,10 +9,21 @@ public class JobController : Controller
     {
         _jobRepository = jobRepository;
     }
-    [Authorize]
-    public async Task<IActionResult> Index()
+    private bool IsJobOwner(Job job)
     {
-        var jobs = await _jobRepository.GetAllAsync();
+        var ComapnyId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        return job.ComapnyId == ComapnyId;
+
+    }
+    [Authorize]
+    public IActionResult Index(string? title , string? location)
+    {
+        string? companyId = null;
+        if (User.IsInRole("Company"))
+        {
+         companyId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+        var jobs = _jobRepository.Search(title, location, companyId);
         return View(jobs);
     }
     [HttpGet]
@@ -31,7 +42,7 @@ public class JobController : Controller
         if (ModelState.IsValid)
         {
             await _jobRepository.AddAsync(job);
-            return RedirectToAction("IndexCompany");
+            return RedirectToAction("Index");
         }
         return View(job);
 
@@ -57,11 +68,10 @@ public class JobController : Controller
         if (ModelState.IsValid)
         {
             await _jobRepository.EditAsync(job);
-            return RedirectToAction("IndexCompany");
+            return RedirectToAction("Index");
 
         }
         else return View(job);
-
 
     }
     [HttpPost]
@@ -73,19 +83,6 @@ public class JobController : Controller
         if (!IsJobOwner(job) || job == null) return Unauthorized();
         await _jobRepository.DeleteAsync(id);
         return Ok();
-    }
-    [Authorize(Roles = "Company")]
-    public async Task<IActionResult> IndexCompany()
-    {
-        var ComapnyId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var jobs = await _jobRepository.GetByCompanyIdAsync(ComapnyId);
-        return View(jobs);
-    }
-    private bool IsJobOwner(Job job)
-    {
-        var ComapnyId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        return job.ComapnyId == ComapnyId;
-
     }
     public async Task<IActionResult> Details(int id)
     {

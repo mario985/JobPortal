@@ -60,5 +60,22 @@ public class JobRepository : IJobRepository
         return await _Context.Jobs.FirstOrDefaultAsync(j => j.Id == id);
     }
 
-  
+    public IEnumerable<Job> Search(string? title, string? location , string? companyId)
+    {
+        var query = _Context.Jobs.AsQueryable();
+        if (!string.IsNullOrEmpty(companyId))
+        {
+            query = query.Where(j => j.ComapnyId == companyId);
+            
+        }
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            query = query.Where(j => j.Title == title).AsQueryable();
+        }
+        if (string.IsNullOrWhiteSpace(location))
+        {
+            query = query.Where(j => j.Location == location).AsQueryable();
+        }
+        return query.ToList();
+    }
 }

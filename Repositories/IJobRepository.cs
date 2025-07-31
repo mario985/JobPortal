@@ -6,4 +6,5 @@ public interface IJobRepository
      Task<List<Job>> GetAllAsync();
      Task<Job> GetByIdAsync(int id);
      Task<List<Job>> GetByCompanyIdAsync(string id);
+     IEnumerable<Job> Search(string? title, string? location , string? companyId);
 }

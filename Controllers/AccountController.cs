@@ -18,6 +18,7 @@ public class AccountController : Controller
         return View();
     }
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> RegisterAsCompany(CompanyRegisterViewModel model)
     {
         if (ModelState.IsValid)
@@ -53,6 +54,7 @@ public class AccountController : Controller
         return View();
     }
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> RegisterAsUser(UserRegisterViewModel model)
     {
         if (ModelState.IsValid)
@@ -88,17 +90,23 @@ public class AccountController : Controller
         return View();
     }
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> LogIn(LogInViewModel model)
     {
         var result = await _signInManager.PasswordSignInAsync(
             model.Email,
             model.Password,
             model.RememberMe,
-            lockoutOnFailure : false
+            lockoutOnFailure: false
         );
         if (result.Succeeded)
         {
-            return RedirectToAction("Index", "Home");
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user.IsCompany)
+            {
+                return RedirectToAction("IndexCompany", "Job");
+            }
+            else return RedirectToAction("Index", "Job");
         }
         else if (result.IsLockedOut)
         {

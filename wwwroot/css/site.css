@@ -71,15 +71,23 @@ body {
 }
 
 .dropdown-menu {
+    min-width: 200px;
     border: none;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.nav-item.dropdown {
+    position: relative;
 }
 
 .dropdown-item {
     border-radius: 8px;
     transition: all 0.3s ease;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
 }
 
 .dropdown-item:hover {
@@ -635,11 +643,14 @@ body {
 
 /* Authentication Styles */
 .auth-container {
+    margin-top: 70px;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(102, 126, 234, 0.6)), url('/images/bg.jpg');
+    background-size: cover;
+    background-position: center;    
     padding: 2rem 1rem;
     position: relative;
     overflow: hidden;

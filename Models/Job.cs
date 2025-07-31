@@ -27,7 +27,10 @@ public class Job
         Internship
 
     }
-    public ICollection<JobApplication>JobApplications{ set; get; }
+    public ICollection<JobApplication> JobApplications { set; get; }
+    [Required]
+    public string Location { set; get; }
+    public DateTime CreatedAt { set; get; } = DateTime.UtcNow;
     
     
 }
