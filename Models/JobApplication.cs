@@ -12,4 +12,12 @@ public class JobApplication
     public bool? IsAccepted { set; get; }
     [Required]
     public string ResumeUrl { set; get; }
+    public ApplicationStatus Status{ set; get; }
+    public enum ApplicationStatus
+    {
+        pending,
+        rejected,
+        accepted
+        
+    }
 }

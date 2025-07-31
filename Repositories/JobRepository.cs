@@ -51,7 +51,7 @@ public class JobRepository : IJobRepository
 
     public async Task<List<Job>> GetByCompanyIdAsync(string id)
     {
-        return await _Context.Jobs.Where(j => j.ComapnyId == id).ToListAsync();
+        return await _Context.Jobs.Where(j => j.CompanyId == id).ToListAsync();
         
     }
 
@@ -65,7 +65,7 @@ public class JobRepository : IJobRepository
         var query = _Context.Jobs.AsQueryable();
         if (!string.IsNullOrEmpty(companyId))
         {
-            query = query.Where(j => j.ComapnyId == companyId);
+            query = query.Where(j => j.CompanyId == companyId);
             
         }
         if (string.IsNullOrWhiteSpace(title))

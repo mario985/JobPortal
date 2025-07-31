@@ -10,7 +10,7 @@ public class Job
     [MinLength(4, ErrorMessage = "title length cant be less than 4 words")]
     public string Title { set; get; }
     [ForeignKey("ApplicationUser")]
-    public string ComapnyId { set; get; }
+    public string CompanyId { set; get; }
     public ApplicationUser Company { set; get; }
     [Required]
     [Range(0, double.MaxValue, ErrorMessage = "salary cant be a negative number")]

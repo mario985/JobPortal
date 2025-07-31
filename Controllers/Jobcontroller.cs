@@ -12,7 +12,7 @@ public class JobController : Controller
     private bool IsJobOwner(Job job)
     {
         var ComapnyId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        return job.ComapnyId == ComapnyId;
+        return job.CompanyId == ComapnyId;
 
     }
     [Authorize]
@@ -38,7 +38,7 @@ public class JobController : Controller
 
     public async Task<IActionResult> Add(Job job)
     {
-        job.ComapnyId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        job.CompanyId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (ModelState.IsValid)
         {
             await _jobRepository.AddAsync(job);
