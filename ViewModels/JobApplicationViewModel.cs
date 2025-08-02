@@ -1,8 +1,7 @@
-using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
-public class JobApplication
+public class JobApplicationViewModel
 {
     [ForeignKey("Job")]
     public int JobId { set; get; }
@@ -12,16 +11,7 @@ public class JobApplication
     public string UserId { set; get; }
     [ValidateNever]
     public ApplicationUser User { set; get; }
-    public bool? IsAccepted { set; get; }
     [Required]
-    public string ResumeUrl { set; get; }
-    public string CoverLetter { set; get; }
-    public ApplicationStatus Status{ set; get; }
-    public enum ApplicationStatus
-    {
-        pending,
-        rejected,
-        accepted
-        
-    }
+    public IFormFile cvFile{ set; get; }
+    public string coverLetter{ set; get; }
 }

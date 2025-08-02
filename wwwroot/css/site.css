@@ -12,6 +12,7 @@ body {
     line-height: 1.6;
     color: #333;
     overflow-x: hidden;
+    padding-top: 120px; /* Increase padding to account for fixed navbar */
 }
 
 /* Navigation Styles */
@@ -21,7 +22,11 @@ body {
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     padding: 1rem 0;
-    margin-bottom: 20px;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .modern-navbar .navbar-brand {
@@ -477,9 +482,12 @@ body {
 
 /* Footer Styles */
 .modern-footer {
-    background: #1f2937;
+    background: linear-gradient(135deg, #1f2937, #374151);
     color: white;
     padding: 3rem 0 1rem;
+    margin-top: 3rem;
+    position: relative;
+    z-index: 10;
 }
 
 .footer-links {
@@ -623,6 +631,14 @@ body {
         text-align: center;
         margin-top: 1rem;
     }
+    
+    body {
+        padding-top: 100px;
+    }
+    
+    .auth-container {
+        padding-top: 100px;
+    }
 }
 
 /* Animations */
@@ -643,7 +659,7 @@ body {
 
 /* Authentication Styles */
 .auth-container {
-    margin-top: 70px;
+    margin-top: 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -654,6 +670,7 @@ body {
     padding: 2rem 1rem;
     position: relative;
     overflow: hidden;
+    padding-top: 120px; /* Account for fixed navbar */
 }
 
 .auth-container::before {
@@ -796,6 +813,21 @@ body {
     font-size: 0.875rem;
     margin-top: 0.25rem;
     display: block;
+}
+
+/* Main Content Area */
+main {
+    min-height: calc(100vh - 200px); /* Ensure minimum height for content */
+    position: relative;
+    z-index: 1;
+    padding-top: 20px;
+}
+
+/* Container spacing for all pages */
+.container {
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-top: 20px;
 }
 
 /* Utility Classes */

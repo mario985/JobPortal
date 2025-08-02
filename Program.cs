@@ -13,6 +13,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
     options.User.RequireUniqueEmail = true;
     options.Password.RequireNonAlphanumeric = false;
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
 
 }).AddEntityFrameworkStores<AppDbContext>()
   .AddDefaultTokenProviders();

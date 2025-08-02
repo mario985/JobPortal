@@ -1,0 +1,177 @@
+@model JobApplication
+
+@{
+    ViewData["Title"] = "Application Details";
+}
+
+<link rel="stylesheet" href="~/css/JobApplication/Details.css" />
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center mb-0">Application Details</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="application-info">
+                                <h4 class="text-primary mb-3">Application Information</h4>
+                                
+                                <div class="info-section">
+                                    <div class="info-item">
+                                        <span class="label"><i class="fas fa-briefcase"></i> Job Title:</span>
+                                        <span class="value">@Model.Job?.Title</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label"><i class="fas fa-building"></i> Company:</span>
+                                        <span class="value">@Model.Job?.Company?.UserName</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label"><i class="fas fa-user"></i> Applicant:</span>
+                                        <span class="value">@Model.User?.UserName</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label"><i class="fas fa-calendar-alt"></i> Applied Date:</span>
+                                        <span class="value">@Model.Job?.CreatedAt.ToString("MMMM dd, yyyy")</span>
+                                    </div>
+                                </div>
+
+                                <div class="status-section mt-4">
+                                    <h5 class="text-secondary">Application Status</h5>
+                                    <div class="status-badge">
+                                        @switch (Model.Status)
+                                        {
+                                            case JobApplication.ApplicationStatus.pending:
+                                                <span class="badge badge-warning">Pending Review</span>
+                                                break;
+                                            case JobApplication.ApplicationStatus.accepted:
+                                                <span class="badge badge-success">Accepted</span>
+                                                break;
+                                            case JobApplication.ApplicationStatus.rejected:
+                                                <span class="badge badge-danger">Rejected</span>
+                                                break;
+                                            default:
+                                                <span class="badge badge-secondary">Unknown</span>
+                                                break;
+                                        }
+                                    </div>
+                                </div>
+
+                                @if (!string.IsNullOrEmpty(Model.CoverLetter))
+                                {
+                                    <div class="cover-letter-section mt-4">
+                                        <h5 class="text-secondary">Cover Letter</h5>
+                                        <div class="cover-letter-content">
+                                            <p>@Model.CoverLetter</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="application-summary">
+                                <div class="summary-card">
+                                    <h5 class="text-center mb-3">Quick Summary</h5>
+                                    <div class="summary-item">
+                                        <span class="label">Job:</span>
+                                        <span class="value">@Model.Job?.Title</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="label">Company:</span>
+                                        <span class="value">@Model.Job?.Company?.UserName</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="label">Location:</span>
+                                        <span class="value">@Model.Job?.Location</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="label">Salary:</span>
+                                        <span class="value">$@Model.Job?.Salary.ToString("N0")</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="label">Type:</span>
+                                        <span class="value">@Model.Job?.Type</span>
+                                    </div>
+                                </div>
+
+                                <div class="cv-section mt-3">
+                                    <h6 class="text-center mb-2">CV/Resume</h6>
+                                    @if (!string.IsNullOrEmpty(Model.ResumeUrl))
+                                    {
+                                        <div class="cv-download">
+                                            <a href="@Model.ResumeUrl" class="btn btn-outline-primary btn-block" target="_blank">
+                                                <i class="fas fa-download"></i> Download CV
+                                            </a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-warning text-center">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <p class="mb-0">CV not available</p>
+                                        </div>
+                                    }
+                                </div>
+
+                                @if (User.IsInRole("Company") && Model.Job?.CompanyId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
+                                {
+                                    <form id="antiForgeryTokenForm" asp-controller="JobApplication" asp-action="UpdateStatus" method="post">
+                                        @Html.AntiForgeryToken()
+                                    </form>
+
+                                    <div class="company-actions mt-3">
+                                        <h6 class="text-center mb-2">Actions</h6>
+                                        <div class="btn-group-vertical w-100">
+                                            <button class="btn btn-success btn-sm mb-2" onclick="updateStatus('accepted')">
+                                                <i class="fas fa-check"></i> Accept
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" onclick="updateStatus('rejected')">
+                                                <i class="fas fa-times"></i> Reject
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                @if (User.IsInRole("User"))
+                {
+                    <a href="@Url.Action("UserApplications", "JobApplication")" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to My Applications
+                    </a>
+                }
+                else if (User.IsInRole("Company"))
+                {
+                    <a href="@Url.Action("CompanyApplications", "JobApplication")" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Applications
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index", "Job")" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Job Listings
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function updateStatus(status) {
+            if (confirm(`Are you sure you want to ${status} this application?`)) {
+                // This would typically make an AJAX call to update the status
+                // For now, we'll just show an alert
+                alert(`Application ${status}! This feature would update the database.`);
+            }
+        }
+    </script>
+} 

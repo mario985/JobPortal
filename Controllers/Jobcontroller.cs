@@ -35,17 +35,23 @@ public class JobController : Controller
     [HttpPost]
     [Authorize(Roles = "Company")]
     [ValidateAntiForgeryToken]
-
     public async Task<IActionResult> Add(Job job)
     {
+        ModelState.Remove("CompanyId");
         job.CompanyId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(job.CompanyId))
+        {
+            ModelState.AddModelError("" , "company id is null");
+            return View(job);
+        }
         if (ModelState.IsValid)
         {
             await _jobRepository.AddAsync(job);
             return RedirectToAction("Index");
         }
         return View(job);
-
+      
+       
     }
     [HttpGet]
     [Authorize(Roles = "Company")]

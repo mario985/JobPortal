@@ -1,0 +1,130 @@
+@model JobApplication
+
+@{
+    ViewData["Title"] = "Apply for Job";
+}
+
+<link rel="stylesheet" href="~/css/JobApplication/Apply.css" />
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center mb-0">Apply for Job</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="Apply" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="UserId" />
+                        <input type="hidden" asp-for="JobId" />
+                        
+                        <div class="application-info mb-4">
+                            <div class="alert alert-info">
+                                <h5><i class="fas fa-info-circle"></i> Application Information</h5>
+                                <p class="mb-0">You are applying as: <strong>@User.Identity.Name</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cvFile" class="form-label">Upload CV/Resume *</label>
+                            <div class="file-upload-area">
+                                <input type="file" id="cvFile" name="cvFile" class="form-control-file" accept=".pdf,.doc,.docx" required />
+                                <small class="form-text text-muted">
+                                    <i class="fas fa-file-upload"></i> 
+                                    Accepted formats: PDF, DOC, DOCX (Max size: 5MB)
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="coverLetter" class="form-label">Cover Letter (Optional)</label>
+                            <textarea id="coverLetter" name="coverLetter" class="form-control" rows="6" 
+                                      placeholder="Tell us why you're interested in this position and why you'd be a great fit..."></textarea>
+                            <small class="form-text text-muted">
+                                <i class="fas fa-edit"></i> 
+                                This is your chance to make a great first impression!
+                            </small>
+                        </div>
+
+                        <div class="application-tips mb-4">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6><i class="fas fa-lightbulb"></i> Application Tips</h6>
+                                    <ul class="mb-0">
+                                        <li>Make sure your CV is up-to-date and relevant to the position</li>
+                                        <li>Write a compelling cover letter that highlights your relevant experience</li>
+                                        <li>Double-check all information before submitting</li>
+                                        <li>You can track your application status in your dashboard</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="@Url.Action("Details", "Job", new { id = Model.JobId })" class="btn btn-secondary btn-block">
+                                        <i class="fas fa-arrow-left"></i> Back to Job Details
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        <i class="fas fa-paper-plane"></i> Submit Application
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // File upload validation
+        document.getElementById('cvFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const maxSize = 5 * 1024 * 1024; // 5MB
+            const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            
+            if (file) {
+                if (file.size > maxSize) {
+                    alert('File size must be less than 5MB');
+                    this.value = '';
+                    return;
+                }
+                
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Please upload a PDF, DOC, or DOCX file');
+                    this.value = '';
+                    return;
+                }
+            }
+        });
+
+        // Character counter for cover letter
+        document.getElementById('coverLetter').addEventListener('input', function() {
+            const maxLength = 2000;
+            const currentLength = this.value.length;
+            const remaining = maxLength - currentLength;
+            
+            let counter = this.parentNode.querySelector('.char-counter');
+            if (!counter) {
+                counter = document.createElement('small');
+                counter.className = 'char-counter form-text text-muted';
+                this.parentNode.appendChild(counter);
+            }
+            
+            counter.textContent = `${currentLength}/${maxLength} characters`;
+            
+            if (remaining < 100) {
+                counter.className = 'char-counter form-text text-warning';
+            } else {
+                counter.className = 'char-counter form-text text-muted';
+            }
+        });
+    </script>
+} 

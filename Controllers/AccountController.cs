@@ -102,11 +102,8 @@ public class AccountController : Controller
         if (result.Succeeded)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user.IsCompany)
-            {
-                return RedirectToAction("IndexCompany", "Job");
-            }
-            else return RedirectToAction("Index", "Job");
+           
+                return RedirectToAction("Index", "Job");
         }
         else if (result.IsLockedOut)
         {

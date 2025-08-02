@@ -6,4 +6,5 @@ public interface IJobApplicationRepository
     Task<List<JobApplication>> UserApplications(string userId);
 
 
+
 }

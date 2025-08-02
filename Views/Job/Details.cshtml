@@ -1,0 +1,121 @@
+@model Job
+
+@{
+    ViewData["Title"] = "Job Details";
+}
+
+<link rel="stylesheet" href="~/css/Job/Details.css" />
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">@Model.Title</h3>
+                        <span class="badge badge-primary">@Model.Type</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="job-details">
+                                <h4 class="text-primary mb-3">Job Description</h4>
+                                <div class="description-content">
+                                    @if (!string.IsNullOrEmpty(Model.Description))
+                                    {
+                                        <p>@Model.Description</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted">No description provided.</p>
+                                    }
+                                </div>
+
+                                <div class="requirements mt-4">
+                                    <h5 class="text-secondary">Requirements</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-clock"></i> <strong>Work Hours:</strong> @Model.WorkHours hours per day</li>
+                                        <li><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> @Model.Location</li>
+                                        <li><i class="fas fa-money-bill-wave"></i> <strong>Salary:</strong> $@Model.Salary.ToString("N0") annually</li>
+                                        <li><i class="fas fa-building"></i> <strong>Company:</strong> @Model.Company?.UserName</li>
+                                        <li><i class="fas fa-calendar-alt"></i> <strong>Posted:</strong> @Model.CreatedAt.ToString("MMMM dd, yyyy")</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="job-summary">
+                                <div class="summary-card">
+                                    <h5 class="text-center mb-3">Job Summary</h5>
+                                    <div class="summary-item">
+                                        <span class="label">Position:</span>
+                                        <span class="value">@Model.Title</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="label">Type:</span>
+                                        <span class="value">@Model.Type</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="label">Location:</span>
+                                        <span class="value">@Model.Location</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="label">Salary:</span>
+                                        <span class="value">$@Model.Salary.ToString("N0")</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="label">Hours:</span>
+                                        <span class="value">@Model.WorkHours/day</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="label">Posted:</span>
+                                        <span class="value">@Model.CreatedAt.ToString("MMM dd")</span>
+                                    </div>
+                                </div>
+
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                                {
+                                    <div class="apply-section mt-3">
+                                        <a href="@Url.Action("Apply", "JobApplication", new { jobId = Model.Id })" class="btn btn-success btn-block btn-lg">
+                                            <i class="fas fa-paper-plane"></i> Apply Now
+                                        </a>
+                                    </div>
+                                }
+                                else if (!User.Identity.IsAuthenticated)
+                                {
+                                    <div class="apply-section mt-3">
+                                        <div class="alert alert-info text-center">
+                                            <i class="fas fa-info-circle"></i>
+                                            <p class="mb-2">Please log in to apply for this position.</p>
+                                            <a href="@Url.Action("LogIn", "Account")" class="btn btn-primary btn-sm">Log In</a>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (User.IsInRole("Company") && Model.CompanyId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
+                                {
+                                    <div class="company-actions mt-3">
+                                        <a href="@Url.Action("Edit", "Job", new { id = Model.Id })" class="btn btn-warning btn-block">
+                                            <i class="fas fa-edit"></i> Edit Job
+                                        </a>
+                                        <a href="@Url.Action("CompanyApplications", "JobApplication")" class="btn btn-info btn-block mt-2">
+                                            <i class="fas fa-users"></i> View Applications
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <a href="@Url.Action("Index", "Job")" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Job Listings
+                </a>
+            </div>
+        </div>
+    </div>
+</div> 

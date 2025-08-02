@@ -1,0 +1,99 @@
+@model IEnumerable<Job>
+
+@{
+    ViewData["Title"] = "Job Listings";
+}
+
+<link rel="stylesheet" href="~/css/Job/Index.css" />
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Job Listings</h2>
+
+    <!-- Search Form -->
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+            <form method="get" class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="title">Job Title</label>
+                                <input type="text" class="form-control" id="title" name="title" value="@Context.Request.Query["title"]" placeholder="Search by job title...">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" class="form-control" id="location" name="location" value="@Context.Request.Query["location"]" placeholder="Search by location...">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button type="submit" class="btn btn-primary btn-block">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Job Listings -->
+    <div class="row">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    <h4>No jobs found</h4>
+                    <p>Try adjusting your search criteria or check back later for new opportunities.</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            @foreach (var job in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="job-card">
+                        <div class="job-card-header">
+                            <h3 class="job-title">@job.Title</h3>
+                            <span class="job-type badge badge-info">@job.Type</span>
+                        </div>
+                        <div class="job-card-body">
+                            <div class="company-info">
+                                <h4 class="company-name">@job.Company?.UserName</h4>
+                                <p class="location"><i class="fas fa-map-marker-alt"></i> @job.Location</p>
+                            </div>
+                            <div class="job-details">
+                                <p class="salary"><i class="fas fa-dollar-sign"></i> $@job.Salary.ToString("N0")</p>
+                                <p class="work-hours"><i class="fas fa-clock"></i> @job.WorkHours hours</p>
+                                <p class="posted-date"><i class="fas fa-calendar"></i> @job.CreatedAt.ToString("MMM dd, yyyy")</p>
+                            </div>
+                        </div>
+                        <div class="job-card-footer">
+                            <div class="action-buttons">
+                                <a href="@Url.Action("Details", "Job", new { id = job.Id })" class="btn btn-primary">Details</a>
+                                @if (User.IsInRole("Company") && job.CompanyId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
+                                {
+                                    <a href="@Url.Action("Edit", "Job", new { id = job.Id })" class="btn btn-warning">Edit</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    @if (User.IsInRole("Company"))
+    {
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <a href="@Url.Action("Add", "Job")" class="btn btn-success btn-lg">
+                    <i class="fas fa-plus"></i> Post New Job
+                </a>
+            </div>
+        </div>
+    }
+</div> 

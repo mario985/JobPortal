@@ -1,0 +1,119 @@
+@model Job
+
+@{
+    ViewData["Title"] = "Edit Job";
+}
+
+<link rel="stylesheet" href="~/css/Job/Edit.css" />
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center mb-0">Edit Job</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="Edit">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="CompanyId" />
+                        <input type="hidden" asp-for="CreatedAt" />
+                        
+                        <div class="form-group">
+                            <label asp-for="Title" class="form-label">Job Title *</label>
+                            <input asp-for="Title" class="form-control" placeholder="Enter job title" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Description" class="form-label">Job Description *</label>
+                            <textarea asp-for="Description" class="form-control" rows="5" placeholder="Describe the job responsibilities and requirements"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Location" class="form-label">Location *</label>
+                                    <input asp-for="Location" class="form-control" placeholder="City, State or Remote" />
+                                    <span asp-validation-for="Location" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Salary" class="form-label">Salary (Annual) *</label>
+                                    <input asp-for="Salary" class="form-control" type="number" placeholder="50000" />
+                                    <span asp-validation-for="Salary" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Type" class="form-label">Job Type *</label>
+                                    <select asp-for="Type" class="form-control">
+                                        <option value="@Job.JobType.FullTime" selected="@(Model.Type == Job.JobType.FullTime)">Full Time</option>
+                                        <option value="@Job.JobType.PartTime" selected="@(Model.Type == Job.JobType.PartTime)">Part Time</option>
+                                        <option value="@Job.JobType.Internship" selected="@(Model.Type == Job.JobType.Internship)">Internship</option>
+                                    </select>
+                                    <span asp-validation-for="Type" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="WorkHours" class="form-label">Work Hours per Day *</label>
+                                    <input asp-for="WorkHours" class="form-control" type="number" min="2" max="12" placeholder="8" />
+                                    <span asp-validation-for="WorkHours" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a href="@Url.Action("Index", "Job")" class="btn btn-secondary btn-block">Cancel</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary btn-block">Update Job</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-danger btn-block" onclick="deleteJob()">Delete Job</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        function deleteJob() {
+            if (confirm('Are you sure you want to delete this job? This action cannot be undone.')) {
+                fetch('@Url.Action("Delete", "Job", new { id = Model.Id })', {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '@Url.Action("Index", "Job")';
+                    } else {
+                        alert('Error deleting job. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error deleting job. Please try again.');
+                });
+            }
+        }
+    </script>
+} 
