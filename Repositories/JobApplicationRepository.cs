@@ -29,17 +29,24 @@ public class JobApplicationRepository : IJobApplicationRepository
         return Applications;
     }
 
-    public async Task<JobApplication?> Details(int jobId, string userId)
+    public async Task<JobApplication> Details(int jobId, string userId)
     {
-        var application =
-        await _context.jobApplications
-        .Include(ja => ja.Job)
-        .Include(ja =>ja.User)
-        .FirstOrDefaultAsync(ja => ja.JobId == jobId && ja.UserId == userId);
-      
-        return application;
+        if (jobId <= 0 || string.IsNullOrEmpty(userId))
+        {
+            return null;
+        }
 
-        
+        var application = await _context.jobApplications
+            .Include(ja => ja.Job)
+            .Include(ja => ja.User)
+            .FirstOrDefaultAsync(ja => ja.JobId == jobId && ja.UserId == userId);
+
+        if (application == null)
+        {
+            return null;
+        }
+
+        return application;
     }
 
     public async Task<List<JobApplication>> UserApplications(string userId)
@@ -51,5 +58,14 @@ public class JobApplicationRepository : IJobApplicationRepository
         .Include(ja =>ja.Job)
         .ToListAsync();
         return userApplications;
+    }
+    public async Task UpdateAsync(JobApplication job){
+        var application = await _context.jobApplications.FirstOrDefaultAsync(ja => ja.JobId==job.JobId && ja.UserId==job.UserId);
+        if (application != null)
+        {
+            application.Status = job.Status;
+            await _context.SaveChangesAsync();
+        }
+        
     }
 }

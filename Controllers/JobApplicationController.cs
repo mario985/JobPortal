@@ -6,20 +6,22 @@ using Microsoft.AspNetCore.Http;
 public class JobApplicationController : Controller
 {
     private readonly IJobApplicationRepository _jobApplicationRepository;
-    public JobApplicationController(IJobApplicationRepository jobApplicationRepository)
+    private readonly IJobRepository _jobRepository;
+    public JobApplicationController(IJobApplicationRepository jobApplicationRepository, IJobRepository jobRepository)
     {
         _jobApplicationRepository = jobApplicationRepository;
+        _jobRepository = jobRepository;
+
 
     }
     [HttpGet]
     [Authorize(Roles = "User")]
     public IActionResult Apply(int jobId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
         JobApplication application
        = new JobApplication
        {
-           UserId = userId,
            JobId = jobId
 
        };
@@ -32,17 +34,18 @@ public class JobApplicationController : Controller
     [HttpPost]
     public async Task<IActionResult> Apply(JobApplicationViewModel model)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null) return Unauthorized();
         if (ModelState.IsValid)
         {
+
             var jobApplication = new JobApplication
             {
                 JobId = model.JobId,
-                UserId = model.UserId,
+                UserId =userId,
                 CoverLetter = model.coverLetter,
                 Status = JobApplication.ApplicationStatus.pending
             };
-
-
             if (model.cvFile != null && model.cvFile.Length > 0)
             {
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.cvFile.FileName);
@@ -70,10 +73,24 @@ public class JobApplicationController : Controller
 
     public async Task<IActionResult> Details(int jobId, string userId)
     {
+        if (jobId <= 0 || string.IsNullOrEmpty(userId))
+        {
+            return NotFound("Invalid job ID or user ID");
+        }
+
         var application = await _jobApplicationRepository.Details(jobId, userId);
-        return View(application);
-
-
+        if (application == null)
+        {
+            return NotFound("Application not found");
+        }
+        var job = await _jobRepository.GetByIdAsync(application.JobId);
+        JobApplicationDetailsViewModel jm =
+        new JobApplicationDetailsViewModel
+        {
+            Job = job,
+            JobApplication=application
+        };
+        return View(jm);
     }
     [Authorize(Roles = "User")]
     public async Task<IActionResult> UserApplications()
@@ -91,14 +108,20 @@ public class JobApplicationController : Controller
 
 
     }
-    public async Task<IActionResult> UpdateStatus(int jobId, string userId, string status)
+    public async Task<IActionResult> UpdateStatus(int jobId , string userId, string status)
     {
         var application = await _jobApplicationRepository.Details(jobId, userId);
-        if (application == null)
+         if (application == null)
         {
-            return NotFound();
+            return Json(new { success = false, message = "Application not found" });
         }
-        return Ok();
+        if (!Enum.TryParse<JobApplication.ApplicationStatus>(status, true, out var parsedStatus))
+        {
+            return Json(new { success = false, message = "Invalid status" });
+        }
+        application.Status = parsedStatus;
+        await _jobApplicationRepository.UpdateAsync(application);
+        return Json(new { success = true, message = "Application status updated successfully" });
     }
 
 

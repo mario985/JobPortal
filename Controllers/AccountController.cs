@@ -13,6 +13,7 @@ public class AccountController : Controller
         _signInManager = signInManager;
     }
     [HttpGet]
+    [RedirectIfAuthenticated]
     public IActionResult RegisterAsCompany()
     {
         return View();
@@ -49,6 +50,7 @@ public class AccountController : Controller
         return View(model);
     }
     [HttpGet]
+    [RedirectIfAuthenticated]
     public IActionResult RegisterAsUser()
     {
         return View();
@@ -85,6 +87,7 @@ public class AccountController : Controller
 
     }
     [HttpGet]
+    [RedirectIfAuthenticated]
     public IActionResult LogIn()
     {
         return View();

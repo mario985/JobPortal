@@ -6,8 +6,6 @@ public class JobApplicationViewModel
     [Required]
     public int JobId { set; get; }  
     [Required]
-    public string UserId { set; get; }
-    [Required]
     public IFormFile cvFile{ set; get; }
     public string coverLetter{ set; get; }
 }
