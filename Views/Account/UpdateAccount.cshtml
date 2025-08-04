@@ -1,0 +1,64 @@
+@model UpdateAccountViewModel
+@{
+    ViewData["Title"] = "Update Account";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Account/UpdateAccount.css" asp-append-version="true" />
+}
+
+<div class="update-account-container">
+    <div class="update-account-card">
+        <div class="update-account-header">
+            <h2><i class="fas fa-user-edit me-2"></i>Update Account</h2>
+            <p>Update your personal information</p>
+        </div>
+
+        <form asp-action="UpdateAccount" method="post" class="update-account-form" id="updateAccountForm">
+           @Html.AntiForgeryToken()
+           
+            <input asp-for="Id" type="hidden" />
+            
+            <div class="form-group">
+                <label asp-for="Name" class="form-label">
+                    <i class="fas fa-user me-2"></i>Full Name
+                </label>
+                <input asp-for="Name" class="form-control" placeholder="Enter your full name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="form-label">
+                    <i class="fas fa-envelope me-2"></i>Email Address
+                </label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email address" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address" class="form-label">
+                    <i class="fas fa-map-marker-alt me-2"></i>Address
+                </label>
+                <textarea asp-for="Address" class="form-control" rows="3" placeholder="Enter your address"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+           <button type="submit" id="submitBtn" class="auth-btn">
+            <i class="fas fa-save me-2"></i>Update Account
+            </button>
+        </form>
+
+        <div class="update-account-footer">
+            <p>Want to change your password? 
+                <a asp-action="ChangePassword" class="text-primary">Change Password</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/updateAccount.js"></script>
+} 

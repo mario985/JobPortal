@@ -6,11 +6,11 @@
 
 @if (Model == null)
 {
-    <div class="alert alert-danger">
-        <h4 class="text-center">Application not found</h4>
+    <div class="content-card">
+        <h4 class="text-center text-danger">Application not found</h4>
         <p class="text-center">The requested job application could not be found.</p>
         <div class="text-center mt-3">
-            <a href="@Url.Action("CompanyApplications", "JobApplication")" class="btn btn-outline-secondary">
+            <a href="@Url.Action("CompanyApplications", "JobApplication")" class="btn btn-modern">
                 <i class="fas fa-arrow-left"></i> Back to Applications
             </a>
         </div>
@@ -20,10 +20,12 @@ else
 {
     <link rel="stylesheet" href="~/css/JobApplication/Details.css" />
 
-    <div class="container mt-4">
+ 
+
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <div class="card">
+                <div class="content-card">
                     <div class="card-header">
                         <h3 class="text-center mb-0">Application Details</h3>
                     </div>
@@ -113,15 +115,15 @@ else
                                         @if (!string.IsNullOrEmpty(Model.JobApplication.ResumeUrl))
                                         {
                                             <div class="cv-download">
-                                                <a href="@Model.JobApplication.ResumeUrl" class="btn btn-outline-primary btn-block" target="_blank">
+                                                <a href="@Model.JobApplication.ResumeUrl" class="btn btn-modern btn-block" target="_blank">
                                                     <i class="fas fa-download"></i> Download CV
                                                 </a>
                                             </div>
                                         }
                                         else
                                         {
-                                            <div class="alert alert-warning text-center">
-                                                <i class="fas fa-exclamation-triangle"></i>
+                                            <div class="content-card">
+                                                <i class="fas fa-exclamation-triangle text-warning"></i>
                                                 <p class="mb-0">CV not available</p>
                                             </div>
                                         }
@@ -138,10 +140,10 @@ else
                                             <div class="company-actions mt-3">
                                                 <h6 class="text-center mb-2">Actions</h6>
                                                 <div class="btn-group-vertical w-100">
-                                                    <button class="btn btn-success btn-sm mb-2" onclick="updateStatus('accepted')">
+                                                    <button class="btn btn-modern btn-success btn-sm mb-2" onclick="updateStatus('accepted')">
                                                         <i class="fas fa-check"></i> Accept
                                                     </button>
-                                                    <button class="btn btn-danger btn-sm" onclick="updateStatus('rejected')">
+                                                    <button class="btn btn-modern btn-danger btn-sm" onclick="updateStatus('rejected')">
                                                         <i class="fas fa-times"></i> Reject
                                                     </button>
                                                 </div>
@@ -157,19 +159,19 @@ else
                 <div class="mt-3">
                     @if (User.IsInRole("User"))
                     {
-                        <a href="@Url.Action("UserApplications", "JobApplication")" class="btn btn-outline-secondary">
+                        <a href="@Url.Action("UserApplications", "JobApplication")" class="btn btn-modern">
                             <i class="fas fa-arrow-left"></i> Back to My Applications
                         </a>
                     }
                     else if (User.IsInRole("Company"))
                     {
-                        <a href="@Url.Action("CompanyApplications", "JobApplication")" class="btn btn-outline-secondary">
+                        <a href="@Url.Action("CompanyApplications", "JobApplication")" class="btn btn-modern">
                             <i class="fas fa-arrow-left"></i> Back to Applications
                         </a>
                     }
                     else
                     {
-                        <a href="@Url.Action("Index", "Job")" class="btn btn-outline-secondary">
+                        <a href="@Url.Action("Index", "Job")" class="btn btn-modern">
                             <i class="fas fa-arrow-left"></i> Back to Job Listings
                         </a>
                     }

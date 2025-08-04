@@ -6,10 +6,12 @@
 
 <link rel="stylesheet" href="~/css/Job/Details.css" />
 
-<div class="container mt-4">
+
+
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card">
+            <div class="content-card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="mb-0">@Model.Title</h3>
@@ -78,7 +80,7 @@
                                 @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
                                 {
                                     <div class="apply-section mt-3">
-                                        <a href="@Url.Action("Apply", "JobApplication", new { jobId = Model.Id })" class="btn btn-success btn-block btn-lg">
+                                        <a href="@Url.Action("Apply", "JobApplication", new { jobId = Model.Id })" class="btn btn-modern btn-success btn-block btn-lg">
                                             <i class="fas fa-paper-plane"></i> Apply Now
                                         </a>
                                     </div>
@@ -89,7 +91,7 @@
                                         <div class="alert alert-info text-center">
                                             <i class="fas fa-info-circle"></i>
                                             <p class="mb-2">Please log in to apply for this position.</p>
-                                            <a href="@Url.Action("LogIn", "Account")" class="btn btn-primary btn-sm">Log In</a>
+                                            <a href="@Url.Action("LogIn", "Account")" class="btn btn-modern btn-sm">Log In</a>
                                         </div>
                                     </div>
                                 }
@@ -97,10 +99,10 @@
                                 @if (User.IsInRole("Company") && Model.CompanyId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
                                 {
                                     <div class="company-actions mt-3">
-                                        <a href="@Url.Action("Edit", "Job", new { id = Model.Id })" class="btn btn-warning btn-block">
+                                        <a href="@Url.Action("Edit", "Job", new { id = Model.Id })" class="btn btn-modern btn-warning btn-block">
                                             <i class="fas fa-edit"></i> Edit Job
                                         </a>
-                                        <a href="@Url.Action("CompanyApplications", "JobApplication")" class="btn btn-info btn-block mt-2">
+                                        <a href="@Url.Action("CompanyApplications", "JobApplication")" class="btn btn-modern btn-block mt-2">
                                             <i class="fas fa-users"></i> View Applications
                                         </a>
                                     </div>
@@ -112,7 +114,7 @@
             </div>
 
             <div class="mt-3">
-                <a href="@Url.Action("Index", "Job")" class="btn btn-outline-secondary">
+                <a href="@Url.Action("Index", "Job")" class="btn btn-modern">
                     <i class="fas fa-arrow-left"></i> Back to Job Listings
                 </a>
             </div>

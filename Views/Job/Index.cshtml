@@ -6,13 +6,14 @@
 
 <link rel="stylesheet" href="~/css/Job/Index.css" />
 
-<div class="container mt-4">
-    <h2 class="text-center mb-4">Job Listings</h2>
+
+
+<div class="container">
 
     <!-- Search Form -->
     <div class="row mb-4">
         <div class="col-md-8 mx-auto">
-            <form method="get" class="card">
+            <form method="get" class="content-card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-5">
@@ -30,7 +31,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>&nbsp;</label>
-                                <button type="submit" class="btn btn-primary btn-block">Search</button>
+                                <button type="submit" class="btn btn-modern btn-block">Search</button>
                             </div>
                         </div>
                     </div>
@@ -44,8 +45,8 @@
         @if (!Model.Any())
         {
             <div class="col-12 text-center">
-                <div class="alert alert-info">
-                    <h4>No jobs found</h4>
+                <div class="content-card">
+                    <h4 class="text-info">No jobs found</h4>
                     <p>Try adjusting your search criteria or check back later for new opportunities.</p>
                 </div>
             </div>
@@ -73,10 +74,10 @@
                         </div>
                         <div class="job-card-footer">
                             <div class="action-buttons">
-                                <a href="@Url.Action("Details", "Job", new { id = job.Id })" class="btn btn-primary">Details</a>
+                                <a href="@Url.Action("Details", "Job", new { id = job.Id })" class="btn btn-modern">Details</a>
                                 @if (User.IsInRole("Company") && job.CompanyId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
                                 {
-                                    <a href="@Url.Action("Edit", "Job", new { id = job.Id })" class="btn btn-warning">Edit</a>
+                                    <a href="@Url.Action("Edit", "Job", new { id = job.Id })" class="btn btn-modern btn-warning">Edit</a>
                                 }
                             </div>
                         </div>
@@ -90,7 +91,7 @@
     {
         <div class="row mt-4">
             <div class="col-12 text-center">
-                <a href="@Url.Action("Add", "Job")" class="btn btn-success btn-lg">
+                <a href="@Url.Action("Add", "Job")" class="btn btn-modern btn-success btn-lg">
                     <i class="fas fa-plus"></i> Post New Job
                 </a>
             </div>

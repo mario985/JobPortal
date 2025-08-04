@@ -8,17 +8,12 @@ body {
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 10px;
     padding: 30px;
     margin-top: 0;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .card {
     border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     overflow: hidden;
 }

@@ -816,11 +816,12 @@ body {
 }
 
 /* Main Content Area */
-main {
+.main-content {
     min-height: calc(100vh - 200px); /* Ensure minimum height for content */
     position: relative;
     z-index: 1;
-    padding-top: 20px;
+    padding-top: 0;
+    margin-top: 0;
 }
 
 /* Container spacing for all pages */
@@ -828,6 +829,95 @@ main {
     margin-top: 0;
     margin-bottom: 20px;
     padding-top: 20px;
+}
+
+/* Ensure consistent spacing for all views */
+.container.mt-4 {
+    margin-top: 2rem !important;
+    padding-top: 2rem;
+}
+
+/* Page headers and titles */
+.page-header {
+    /* background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(102, 126, 234, 0.1)); */
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    /* border-bottom: 1px solid #e5e7eb; */
+}
+
+.page-title {
+    color: #1f2937;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.page-subtitle {
+    color: #6b7280;
+    font-size: 1.1rem;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Card styling for consistent look */
+.content-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Form styling consistency */
+.form-container {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+/* Button consistency */
+.btn-modern {
+    background: linear-gradient(135deg, #2563eb, #667eea);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-modern.btn-success {
+    background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.btn-modern.btn-warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.btn-modern.btn-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
 }
 
 /* Utility Classes */
