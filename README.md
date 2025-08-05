@@ -54,7 +54,7 @@ An ASP.NET Core MVC web application for job seekers and employers to connect. Us
 ### 🧾 Review Application
 ![Review Application](Screenshots/reviewapplication.png)
 ### 🧾 User Application
-![Review Application](Screenshot/userapplications.png)
+![Review Application](Screenshots/userapplications.png)
 
 ### 🔐 Sign In
 ![Sign In](Screenshots/SignIn.png)
