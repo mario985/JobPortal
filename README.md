@@ -43,19 +43,19 @@ An ASP.NET Core MVC web application for job seekers and employers to connect. Us
 ## 📸 Screenshots
 
 ### 📝 Apply Job
-![Apply Job](screenshots/ApplyJob.png)
+![Apply Job](Screenshots/ApplyJob.png)
 
 ### 🔍 Job Details
-![Job Details](screenshots/JobDetails.png)
+![Job Details](Screenshots/JobDetails.png)
 
 ### 📋 Jobs Listing
-![Jobs](screenshots/Jobs.png)
+![Jobs](Screenshots/Jobs.png)
 
 ### 🧾 Review Application
-![Review Application](screenshots/reviewapplication.png)
+![Review Application](Screenshots/reviewapplication.png)
 
 ### 🔐 Sign In
-![Sign In](screenshots/SignIn.png)
+![Sign In](Screenshots/SignIn.png)
 
 
 
