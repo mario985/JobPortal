@@ -112,7 +112,10 @@ public class AccountController : Controller
                model.Password,
                model.RememberMe,
                lockoutOnFailure: false
+            
            );
+                bool flag =await  _userManager.CheckPasswordAsync(user, model.Password);
+                Console.WriteLine(flag);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Job");

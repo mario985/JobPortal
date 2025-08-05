@@ -22,13 +22,16 @@ builder.Services.AddScoped<IJobApplicationRepository, JobApplicationRepository>(
 var app = builder.Build();
 app.Lifetime.ApplicationStarted.Register(async () =>
 {
+
     using var scope = app.Services.CreateScope();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    await IdentitySeeder.SeedRoleAsync(roleManager);
-   
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    await IdentitySeeder.SeedRoleAsync(roleManager, userManager);
+
 
 }
 );
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
